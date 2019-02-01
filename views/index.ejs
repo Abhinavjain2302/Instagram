@@ -1,0 +1,74 @@
+<html>
+<%include header.ejs%>
+<%include navbar.ejs%>
+
+<body>
+<center>
+
+<div><h3>Hello User</h3></div>
+<form method="post" action="/insert" enctype="multipart/form-data" >
+<pre>
+	<h5>Upload Image</h5> <input type="file" name="image" required>  
+	<button type="submit" value="Upload">Upload</button>
+</pre>
+</form>
+</center>
+
+<div class="content">
+<ul>
+<%for(var i=0;i<result.length;i++){%>
+	
+ <%var status="Like"%>		
+<%for(var j=0;j<(result[i].likedUserId).length;j++){%>
+ <%if(userId==result[i].likedUserId){%>
+ <% status="Unlike"%>
+ <%}else{%>
+<% status="Like"%>
+   <%}%>
+	<%}%>
+
+
+<li>	
+<img src="/<%=result[i].imagepath%>" height="200px" weight="200px">		
+</li>	
+
+
+<li>
+<pre>
+<input type="button" class="like" data-id="<%=result[i]._id%>" id="like_<%=result[i]._id%>" value="<%=status%>"> <span id="likes_<%=result[i]._id%>"> <%=result[i].totalLikes%></span>  <a href="#"   class="Comments" data-id="<%=i%>">View Comments</a></pre>
+</li>
+<li>
+<textarea name="Addcomment" form="userform"></textarea>
+</li>
+
+
+<li>
+   <form id="userform" style="display:none" class="same" method="post" action="/comment">
+	       
+	       <pre>Add Comment <textarea name="comments"></textarea></pre>
+	     	<button type="submit" >Add Comment</button>
+			</form>
+</li>	
+		
+		<br><hr>
+	
+		<%}%>
+</ul>
+</div>
+
+   <script
+  src="https://code.jquery.com/jquery-1.12.4.js"
+  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script>
+<script src="/javascripts/main.js"></script>
+  <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/3.3.7/js/sb-admin-2.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.5.2/metisMenu.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.1/raphael.js'></script>
+    <script src="/javascripts/morris-index.js" type="text/javascript"></script>
+
+</body>
+
+
+</html>
