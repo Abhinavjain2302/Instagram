@@ -4,7 +4,7 @@ mongoose.connect('mongodb://localhost:27017/mydb');
 
 var Schema=mongoose.Schema;
 
-var image= new Schema({
+var personSchema= new Schema({
     imagepath:String,
     userId:String,
     totalLikes: { type: Number, default: 0 },
@@ -23,7 +23,7 @@ var image= new Schema({
     }]
 });
 
-var Person =mongoose.model('Image',imageSchema);
+var Person =mongoose.model('Person',personSchema);
 
 
 module.exports=Person;
