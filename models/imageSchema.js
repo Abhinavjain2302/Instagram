@@ -1,20 +1,18 @@
+const User=require('./user-model');
 
 var mongoose=require('mongoose');
 mongoose.connect('mongodb://localhost:27017/mydb');
 
 var Schema=mongoose.Schema;
 
-var personSchema= new Schema({
+var imageSchema= new Schema({
     imagepath:String,
-    userId:String,
     totalLikes: { type: Number, default: 0 },
-    likedUserId:[String],
+    likedUserId:[Schema.Types.ObjectId],
     comments:[{
-    	 name:{
-            type:String
-        },
-        uid:{
-            type:String
+        commentBy:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'User'
         },
         comment:{
             type:String
@@ -23,7 +21,7 @@ var personSchema= new Schema({
     }]
 });
 
-var Person =mongoose.model('Person',personSchema);
+var Image =mongoose.model('Image',imageSchema);
 
 
-module.exports=Person;
+module.exports=Image;

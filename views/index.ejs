@@ -34,20 +34,31 @@
 <img src="/<%=result[i].imagepath%>" height="200px" weight="200px">		
 </li>	
 
-
 <li>
 <pre>
 <input type="button" class="like" data-id="<%=result[i]._id%>" id="like_<%=result[i]._id%>" value="<%=status%>"> <span id="likes_<%=result[i]._id%>"> <%=result[i].totalLikes%></span>  <a href="#"   class="Comments" data-id="<%=i%>">View Comments</a></pre>
 </li>
 
+<%for(var j=0;j<result[i].comments.length;j++){%>
+
+<li>
+<pre>
+<%=result[i].comments[j].name%>  <div><%=result[i].comments[j].comment%></div>
+</pre>
+</li>
+
+<%}%>
+
+
+
 
 
 <li>
-   <form id="userform" style="display:none" class="same" method="post" action="#">
+   <div  style="display:none" class="same" >
 	       
-	       <pre>Add Comment <textarea name="comments"></textarea></pre>
-	     	<button type="submit" >Add Comment</button>
-			</form>
+	       <pre>Add Comment <textarea name="comments" id="name"></textarea></pre>
+	     	<input type="button" class="addComment" data-id="<%=result[i]._id%>"value="Add Comment"></input>
+			</div>
 </li>	
 		
 		<br><hr>

@@ -3,11 +3,11 @@ var ObjectId = mongojs.ObjectId;
 const fs=require('fs');
 const path = require("path");
 
-var Person =require('../models/personSchema');
+var Image =require('../models/imageSchema');
 
 
 var deleteUser=function(req,res,next){
-    Person.find({ _id: ObjectId(req.params.id)},function(err,result){
+    Image.find({ _id: ObjectId(req.params.id)},function(err,result){
         var tempPath=path.join(__dirname,"/upload/");
         console.log(tempPath);
         console.log(result);
@@ -16,7 +16,7 @@ var deleteUser=function(req,res,next){
 
 
 
-    Person.remove({ _id: ObjectId(req.params.id) },function(err,result){
+    Image.remove({ _id: ObjectId(req.params.id) },function(err,result){
    if(err){
     console.log(err);
    }

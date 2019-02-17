@@ -22,6 +22,47 @@ else{
 }
 
 
+//for comment addition form
+$(document).ready(function(){
+ $('.addComment').on('click',addComment);
+
+});
+    /* attach a submit handler to the form */
+    function addComment(){
+
+      // /* Send the data using post with element id name and name2*/
+      // var posting = $.post( url, { name: $('#name').val() } );
+
+      // /* Alerts the results */
+      // posting.done(function( data ) {
+      //  console.log(data);
+      // });
+        $.ajax({
+            url: '/comments/'+$(this).data('id'),
+            type: 'POST',
+            data:  { comment: $('#name').val() },
+            success: function(data){
+              console.log(data);
+               //  var likes = data[0].totalLikes;
+               // // var unlikes = data['unlikes'];
+
+               //  $("#likes_"+postid).text(likes);        // setting likes
+               // // $("#unlikes_"+postid).text(likes);    // setting unlikes
+
+            
+               //     // $("#like_"+postid).css("color","#ffa449");
+               //     $("#like_"+postid).css("color","lightseagreen");
+              }
+            
+        });
+
+
+
+    };
+
+
+
+
 //for comments text box
 $(document).ready(function(){
  $('.Comments').on('click',myFunction);

@@ -2,8 +2,10 @@ const fs=require('fs');
 const path = require("path");
 var session = require('express-session');
 
+const User=require('../models/user-model');
 
-var Person=require("../models/personSchema");
+
+var Image=require("../models/imageSchema");
 
 var createUser=function(req,res,next){
    console.log("id is"+ req.session.userId);
@@ -11,16 +13,20 @@ var createUser=function(req,res,next){
    console.log(tempPath);
    if ((path.extname(req.file.originalname).toLowerCase() === ".png")||(path.extname(req.file.originalname).toLowerCase() === ".jpg")) {
      
- 
-     var user=  Person({
-     imagepath:req.file.filename,
-     userId:req.session.userId
+     var image=  Image({
+     imagepath:req.file.filename
+     //userId:req.session.userId
     })  
     
-    user.save(function(err,result){
+    image.save(function(err,result){
      if(err) throw err;
      console.log(result);
-     res.redirect('/display')
+     User.findByIdAndUpdate(req.session.userId,{$push:{images:result._id}},function(err,result){
+      if(err) throw err;
+      console.log(results)
+
+          res.redirect('/display')
+     }) 
     })
       } else {
        fs.unlink(tempPath, err => {
