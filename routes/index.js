@@ -16,7 +16,10 @@ var displayUser=require('../controller/display');
 var likes=require('../controller/likes');
 var unlikes=require('../controller/unlikes');
 var comments=require('../controller/comments');
-var deleteUser=require('../controller/delete');
+var reply=require('../controller/reply');
+var deleteComment=require('../controller/deleteComment');
+var deleteImage=require('../controller/deleteImage');
+var deleteReply=require('../controller/deleteReply');
 var loginUser=require('../controller/login');
 var signupUser=require('../controller/signup')
 
@@ -56,7 +59,18 @@ router.get('/display', function (req, res, next) {
 
 
 router.delete('/delete/:id', function (req, res, next) {
-         deleteUser(req,res,next);
+         deleteComment(req,res,next);
+});
+
+
+
+router.delete('/deleteImage/:id', function (req, res, next) {
+         deleteImage(req,res,next);
+});
+
+
+router.delete('/deleteReply/:id', function (req, res, next) {
+         deleteReply(req,res,next);
 });
 
 
@@ -74,6 +88,11 @@ router.post('/unlikes/:id', function (req, res, next) {
 router.post('/comments/:id', function (req, res, next) {
         
         comments(req,res,next);
+});
+
+router.post('/reply/:id', function (req, res, next) {
+        
+        reply(req,res,next);
 });
 
 module.exports = router;

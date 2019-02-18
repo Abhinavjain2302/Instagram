@@ -21,7 +21,7 @@ var createUser=function(req,res,next){
     image.save(function(err,result){
      if(err) throw err;
      console.log(result);
-     User.findByIdAndUpdate(req.session.userId,{$push:{images:result._id}},function(err,result){
+     User.findByIdAndUpdate(req.session.userId,{$push:{images:result._id}},function(err,results){
       if(err) throw err;
       console.log(results)
 

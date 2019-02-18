@@ -61,3 +61,10 @@ a:hover {text-decoration: none!important;}
     color: #333;
 }
 .custom-sidebar-nav-list ul li a {border-bottom: solid thin #e7e7e7;}
+
+.reply-ul-box {
+  display: none;
+}
+.reply-ul-box.active {
+  display: block;
+}

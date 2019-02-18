@@ -1,4 +1,4 @@
-const User=require('./user-model');
+const Comment=require('./commentSchema');
 
 var mongoose=require('mongoose');
 mongoose.connect('mongodb://localhost:27017/mydb');
@@ -10,14 +10,8 @@ var imageSchema= new Schema({
     totalLikes: { type: Number, default: 0 },
     likedUserId:[Schema.Types.ObjectId],
     comments:[{
-        commentBy:{
             type: mongoose.Schema.Types.ObjectId,
-            ref:'User'
-        },
-        comment:{
-            type:String
-        }
-
+            ref:'Comment'
     }]
 });
 

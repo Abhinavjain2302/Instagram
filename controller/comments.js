@@ -2,35 +2,32 @@ var mongojs = require('mongojs');
 var ObjectId = mongojs.ObjectId;
 var session = require('express-session');
 
-var Image =require('../models/imageSchema');
+
+var Image=require("../models/imageSchema");
+var Comment =require('../models/commentSchema');
 
   var AddComments=function(req,res,next){
      
   var id = req.params.id;
   var myquery = { _id: ObjectId(id) };
   var userId=req.session.userId;
-  console.log(req.body.comment);
-  // Person.findOneAndUpdate(myquery,{$push:{likedUserId :userId}},function(err,result){
-  //   console.log(userId+"inserted into array");
-  // })
-  var comment={
+  //console.log(req.body.comment);
+  
+   new Comment({
     commentBy:userId,
     comment:req.body.comment
-  }
+  }).save(function(err,result){
+    if (err) throw err;
 
-  var newvalues = { $push: { "comments":comment } };
-  
-  Image.findOneAndUpdate(myquery,newvalues,function(err,result){
-  if(err) {
-    console.log(err);
-  }else{
-    console.log("Data Updated");
-  }
-}).then(function(){ Image.find({ _id: ObjectId(id)},function(err,result){
-        console.log(result[0].comments);
-        res.send(result);
-    })
+    Image.findByIdAndUpdate(id,{$push:{comments:result._id}},function(err,status){
+      if (err) console.log(err);
+    Image.find({ _id: ObjectId(id) }).populate({path: 'comments',populate:{path:'commentBy'}}).exec(function(err,images){
+    console.log(images);
+    res.send(images);
+     })
+  })
 })
+
  }
 
 module.exports=AddComments;

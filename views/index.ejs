@@ -5,7 +5,7 @@
 <body>
 <center>
 
-<div><h3>Hello User</h3></div>
+<div><h3>Hello <%=user.username%></h3></div>
 <form method="post" action="/insert" enctype="multipart/form-data" >
 <pre>
 	<h5>Upload Image</h5> <input type="file" name="image" required>  
@@ -15,11 +15,12 @@
 </center>
 
 <div class="content">
-<ul style="list-style-type:none;">
+<ul style="list-style-type:none;" >
 	
 </style>
 <%for(var i=0;i<result.length;i++){%>
 	
+
  <%var status="Like"%>		
 <%for(var j=0;j<(result[i].likedUserId).length;j++){%>
  <%if(userId==result[i].likedUserId){%>
@@ -30,34 +31,65 @@
 	<%}%>
 
 
+
+
 <li>	
 <img src="/<%=result[i].imagepath%>" height="200px" weight="200px">		
 </li>	
 
 <li>
 <pre>
-<input type="button" class="like" data-id="<%=result[i]._id%>" id="like_<%=result[i]._id%>" value="<%=status%>"> <span id="likes_<%=result[i]._id%>"> <%=result[i].totalLikes%></span>  <a href="#"   class="Comments" data-id="<%=i%>">View Comments</a></pre>
+<input type="button" class="like" data-id="<%=result[i]._id%>" id="like_<%=result[i]._id%>" value="<%=status%>"> <span id="likes_<%=result[i]._id%>"> <%=result[i].totalLikes%></span>  <a href="#"   class="Comments" data-id="<%=i%>">View Comments</a> </pre>
+
+
+<%for(var k=0;k<(user.images).length;k++){%>
+<%if(JSON.stringify(user.images[k])==JSON.stringify(result[i]._id)){%>
+   <span> <input type="button" value="Delete Image" data-id="<%=result[i]._id%>" class="deleteImage"></input></span>
+	<%}%>
+<%}%>
+
 </li>
 
+<div id="header">
+<ul style="list-style-type:none;" id="list-comments<%=result[i]._id%>">
 <%for(var j=0;j<result[i].comments.length;j++){%>
 
 <li>
 <pre>
-<%=result[i].comments[j].name%>  <div><%=result[i].comments[j].comment%></div>
+<b><%=result[i].comments[j].commentBy.username%></b> : <%=result[i].comments[j].comment%> <input type="button" value="Delete" data-id="<%=result[i].comments[j]._id%>" class="deleteComment"></input> <a href="#"   class="Reply" data-id="<%=j%>">Reply</a>
 </pre>
+
+   <ul style="list-style-type:none;"  data-click-check="true" class="reply-ul-box">
+    <li>
+   <div class="replybox" >
+	   <pre><textarea id="replyname<%=result[i].comments[j]._id%>"></textarea> <input type="button" class="addReply"  data-id="<%=result[i].comments[j]._id%>"value="Add Reply"></input></pre>
+	</div>
+    </li>	
+  </ul>
+      <ul style="list-style-type:none" id="list-reply<%=result[i].comments[j]._id%>">
+      <%for(var k=0;k<result[i].comments[j].replies.length;k++){%>
+      <li>
+      	<pre>
+      <b><%=result[i].comments[j].replies[k].replyBy.username%></b> : <%=result[i].comments[j].replies[k].reply%> <input type="button" value="Delete Reply" data-id="<%=result[i].comments[j].replies[k]._id%>" class="deleteReply"></input>
+       </pre>
+
+      </li>
+      <%}%>
+      </ul>
+
 </li>
 
 <%}%>
-
+</ul>
+</div>
 
 
 
 
 <li>
    <div  style="display:none" class="same" >
-	       
-	       <pre>Add Comment <textarea name="comments" id="name"></textarea></pre>
-	     	<input type="button" class="addComment" data-id="<%=result[i]._id%>"value="Add Comment"></input>
+	   <pre>Add Comment <textarea name="comments" id="name<%=result[i]._id%>"></textarea></pre>
+	   <input type="button" class="addComment"  data-id="<%=result[i]._id%>"value="Add Comment"></input>
 			</div>
 </li>	
 		
